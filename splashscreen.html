@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Go-Cycle - Splash Screen</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -14,7 +13,7 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1e5799, #207cca, #2989d8, #1e5799);
+            background: linear-gradient(135deg, #1e5799, #207cca, #2989d8);
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -185,6 +184,20 @@
             z-index: 10;
         }
         
+        .redirect-info {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px;
+            backdrop-filter: blur(3px);
+        }
+        
         @media (max-width: 600px) {
             .app-name {
                 font-size: 2.8rem;
@@ -231,43 +244,34 @@
     <div class="copyright">
         &copy; 2023 Go-Cycle. All rights reserved.
     </div>
+    
+    <div class="redirect-info">
+        Aplikasi akan dialihkan ke halaman utama dalam <span id="countdown">3</span> detik
+    </div>
 
     <script>
-        // Redirect setelah loading selesai
-        setTimeout(function() {
-            // Di aplikasi nyata, ini akan mengarahkan ke halaman utama
-            // window.location.href = "home.html";
-            document.body.innerHTML = `
-                <div style="
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    height: 100vh;
-                    background: #f0f8ff;
-                    color: #1e5799;
-                    text-align: center;
-                    padding: 20px;
-                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                ">
-                    <h1 style="font-size: 2.5rem; margin-bottom: 20px;">Aplikasi Go-Cycle Siap Digunakan!</h1>
-                    <p style="font-size: 1.2rem; margin-bottom: 30px;">Silakan mulai menggunakan layanan ojek online terbaik di Gorontalo</p>
-                    <button onclick="location.reload()" style="
-                        background: linear-gradient(to right, #1e5799, #2989d8);
-                        color: white;
-                        border: none;
-                        padding: 12px 30px;
-                        font-size: 1.1rem;
-                        border-radius: 30px;
-                        cursor: pointer;
-                        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-                        transition: transform 0.3s;
-                    ">
-                        Kembali ke Splash Screen
-                    </button>
-                </div>
-            `;
-        }, 3000);
+        // Fungsi untuk mengarahkan ke halaman berikutnya
+        function redirectToMainPage() {
+            // Ini akan mengarahkan ke URL yang sebenarnya di aplikasi
+            // Di WebView Kodular, redirect ini akan ditangkap oleh WebView
+            window.location.href = "https://go-cycle.com/home";
+        }
+        
+        // Menghitung mundur dan redirect
+        let count = 3;
+        const countdownElement = document.getElementById('countdown');
+        const countdownInterval = setInterval(() => {
+            count--;
+            countdownElement.textContent = count;
+            
+            if (count === 0) {
+                clearInterval(countdownInterval);
+                redirectToMainPage();
+            }
+        }, 1000);
+        
+        // Redirect setelah loading selesai (3 detik)
+        setTimeout(redirectToMainPage, 3000);
     </script>
 </body>
-</html>
+</html></html>
