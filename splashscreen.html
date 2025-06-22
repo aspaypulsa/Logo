@@ -184,7 +184,7 @@
             z-index: 10;
         }
         
-        .redirect-info {
+        .kodular-info {
             position: absolute;
             top: 20px;
             left: 0;
@@ -245,33 +245,42 @@
         &copy; 2023 Go-Cycle. All rights reserved.
     </div>
     
-    <div class="redirect-info">
-        Aplikasi akan dialihkan ke halaman utama dalam <span id="countdown">3</span> detik
+    <div class="kodular-info">
+        Aplikasi siap dalam <span id="countdown">3</span> detik
     </div>
 
     <script>
-        // Fungsi untuk mengarahkan ke halaman berikutnya
-        function redirectToMainPage() {
-            // Ini akan mengarahkan ke URL yang sebenarnya di aplikasi
-            // Di WebView Kodular, redirect ini akan ditangkap oleh WebView
-            window.location.href = "https://go-cycle.com/home";
+        // Fungsi untuk mengirim status ke Kodular
+        function sendToKodular() {
+            try {
+                // Kirim status ke Kodular
+                if (window.AppInventor) {
+                    window.AppInventor.setWebViewString("splash_selesai");
+                    console.log("Status 'splash_selesai' berhasil dikirim ke Kodular");
+                } else {
+                    console.log("Objek AppInventor tidak ditemukan");
+                }
+            } catch (error) {
+                console.error("Error saat mengirim ke Kodular:", error);
+            }
         }
         
-        // Menghitung mundur dan redirect
+        // Menghitung mundur dan kirim status
         let count = 3;
         const countdownElement = document.getElementById('countdown');
+        
         const countdownInterval = setInterval(() => {
             count--;
             countdownElement.textContent = count;
             
             if (count === 0) {
                 clearInterval(countdownInterval);
-                redirectToMainPage();
+                sendToKodular();
             }
         }, 1000);
         
-        // Redirect setelah loading selesai (3 detik)
-        setTimeout(redirectToMainPage, 3000);
+        // Kirim status setelah 3 detik
+        setTimeout(sendToKodular, 3000);
     </script>
 </body>
-</html></html>
+</html>
